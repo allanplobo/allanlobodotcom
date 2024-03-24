@@ -1,0 +1,25 @@
+@import "../../../../styles/variables";
+
+section {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .info {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+
+    img {
+      border-radius: 50%;
+      border: 2px solid $primary;
+    }
+
+    .texts {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

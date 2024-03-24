@@ -1,0 +1,13 @@
+@import "./variables";
+
+@mixin hover-box-shadow($color) {
+  $colorToUse: $primary;
+
+  @if $color {
+    $colorToUse: color;
+  }
+
+  &hover {
+    box-shadow: 0 0 0.8em $colorToUse;
+  }
+}
