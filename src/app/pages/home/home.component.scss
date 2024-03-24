@@ -1,4 +1,4 @@
-@import "../../../../styles/variables";
+@import "../../../styles/main.scss";
 
 section {
   width: 100%;
@@ -6,20 +6,69 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+
+  .info,
+  .actions {
+    display: flex;
+    gap: 2.2rem;
+    justify-content: center;
+    align-items: center;
+  }
 
   .info {
-    width: 50%;
-    display: flex;
-    flex-wrap: wrap;
+    @media screen and (max-width: 750px) {
+      gap: 1.2rem;
+      flex-direction: column;
+    }
 
     img {
       border-radius: 50%;
-      border: 2px solid $primary;
+      border: 3px solid $primary;
+
+      @media screen and (max-width: 750px) {
+        width: 140px;
+        height: 140px;
+      }
+
+      @include hover-box-shadow();
     }
 
     .texts {
       display: flex;
       flex-direction: column;
+      gap: 8px;
+
+      @media screen and (max-width: 750px) {
+        text-align: center;
+      }
+
+      h1 {
+        letter-spacing: 2px;
+        font-size: 2em;
+        @media screen and (max-width: 750px) {
+          font-size: 1.8em;
+        }
+      }
+
+      p {
+        width: 82%;
+        color: #bbbbbb;
+
+        @media screen and (max-width: 750px) {
+          width: 100%;
+          margin: 8px 0px;
+        }
+      }
+    }
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    padding-top: 8px;
+
+    @media screen and (max-width: 350px) {
+      gap: 1.2rem;
     }
   }
 }

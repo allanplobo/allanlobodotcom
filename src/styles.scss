@@ -4,9 +4,12 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: $soft-grey;
+  background-color: $black;
   color: #fff;
-  font-family: "Space Mono", monospace;
+
+  * {
+    font-family: "Montserrat", sans-serif;
+  }
 }
 
 h1,
@@ -22,6 +25,35 @@ a {
 }
 
 .max-container {
-  max-width: 1300px;
+  max-width: 975px;
   margin: 0 auto;
+  padding: $default-web-padding;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 600px) {
+    padding: $default-mobile-padding;
+  }
+}
+
+.al-button {
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 20px;
+  min-width: 140px;
+  border: none;
+  border-radius: 8px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-color: $primary;
+  text-decoration: none;
+  font-weight: 600;
+
+  @include hover-box-shadow;
+}
+
+a {
+  text-decoration: none;
 }
