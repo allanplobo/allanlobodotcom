@@ -24,13 +24,13 @@ jobs:
         run: npm install
 
       - name: Build Angular application
-        run: ng build --prod
+        run: ng build
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: angular-app
-          path: dist/my-app
+          path: dist/allanlobodotcom
 
   deploy:
     needs: build
