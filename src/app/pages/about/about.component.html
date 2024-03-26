@@ -1,1 +1,105 @@
-<p>about works!</p>
+<app-topbar page="about"></app-topbar>
+
+<div class="max-container container">
+  <h1 class="title">Sobre mim</h1>
+
+  <section class="me">
+    <div class="intro">
+      <div class="texts">
+        <p>
+          Desenvolvedor Paraense em terras capixabas apaixonado por tecnologia!
+        </p>
+
+        <p class="experience">
+          Já atuei em diversos projetos Web, em empresas como
+          <strong>Shift</strong>, <strong>Somos</strong> e
+          <strong>Brisanet Telecomunicações</strong>. Atualmente sou
+          Desenvolvedor na área de inovação e tecnologia do Magazine Luiza, a
+          <a
+            title="acessar página da Luizalabs no linkedin"
+            target="_blank"
+            href="https://www.linkedin.com/company/luizalabs/mycompany/"
+            class="link"
+            >Luizalabs</a
+          >, desenvolvendo sistemas utilizando Angular e NestJS!
+        </p>
+
+        <p>
+          Além de produzir conteúdo no meu
+          <a class="link" title="acessar página do blog" routerLink="/blog"
+            >Blog</a
+          >, realizo trabalhos como Freelancer ou Part-Time, focado em minha
+          especialidade que é o Frontend com Angular. Abaixo você pode conferir
+          feedbacks recentes
+        </p>
+      </div>
+
+      <img
+        priority
+        class="photo"
+        ngSrc="../../../assets/img/allanlobo.jpg"
+        width="200"
+        height="200"
+        alt="Allan Lobo"
+        title="Allan Lobo"
+      />
+    </div>
+  </section>
+
+  <section class="clients">
+    <h1>Feedback de Clientes</h1>
+
+    <div class="feedbacks">
+      @for (feedback of feedbacks; track $index) {
+      <div class="feedback">
+        <div class="info">
+          <img
+            priority
+            class="photo"
+            [ngSrc]="feedback.img"
+            width="80"
+            height="80"
+            [alt]="feedback.business"
+            [title]="feedback.business"
+          />
+          <div class="author">
+            <p class="name">{{ feedback.author }}</p>
+            <p class="role">{{ feedback.role }} - {{ feedback.business }}</p>
+          </div>
+        </div>
+
+        <p class="feedback-text">{{ feedback.text }}</p>
+      </div>
+
+      }
+    </div>
+  </section>
+
+  <section class="call-to-action">
+    <h2 class="text-to-action">
+      Precisa de um Dev Angular
+      <span> qualificado em seu projeto ou empresa?</span>
+    </h2>
+
+    <div class="buttons">
+      <a
+        class="al-button"
+        title="entre em contato por-email"
+        href="mailto:eu@allanlobo.com"
+      >
+        <fa-icon [icon]="emailIcon"></fa-icon>
+        eu&#64;allanlobo.com
+      </a>
+
+      <a
+        class="al-button linkedin"
+        title="acessar meu linkedin"
+        href="https://www.linkedin.com/in/allanplobo/"
+        target="_blank"
+      >
+        <fa-icon [icon]="linkedInIcon"></fa-icon>
+        Allan Lobo
+      </a>
+    </div>
+  </section>
+</div>
