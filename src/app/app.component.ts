@@ -8,6 +8,7 @@ import { TopbarComponent } from './core/components/topbar/topbar.component';
   standalone: true,
   imports: [RouterOutlet, TopbarComponent, FooterComponent],
   template: `
+    <app-topbar></app-topbar>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
   `,

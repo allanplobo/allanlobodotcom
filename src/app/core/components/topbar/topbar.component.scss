@@ -1,0 +1,48 @@
+@import "../../../../styles/variables";
+
+header {
+  background-color: $grey;
+  position: sticky;
+  top: 0;
+
+  .max-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $default-mobile-padding;
+    height: 70px;
+
+    .name {
+      font-size: 1.3em;
+      font-weight: 500;
+      letter-spacing: 4px;
+      transition: color 0.2s;
+
+      &:hover {
+        font-weight: 500;
+        color: $primary;
+      }
+    }
+
+    ul {
+      display: flex;
+      gap: 22px;
+
+      a {
+        padding: 2px 0px;
+        transition: color 0.1s;
+
+        &:hover:not(.current) {
+          font-weight: 500;
+          color: $primary;
+        }
+
+        &.current {
+          cursor: default;
+          font-weight: 500;
+          border-bottom: 2px solid $primary;
+        }
+      }
+    }
+  }
+}

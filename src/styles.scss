@@ -24,6 +24,10 @@ a {
   color: inherit;
 }
 
+li {
+  list-style: none;
+}
+
 .max-container {
   max-width: 975px;
   margin: 0 auto;
@@ -38,11 +42,11 @@ a {
 .al-button {
   cursor: pointer;
   text-transform: uppercase;
-  padding: 20px;
+  padding: 12px;
   min-width: 140px;
   border: none;
   border-radius: 8px;
-  height: 40px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
