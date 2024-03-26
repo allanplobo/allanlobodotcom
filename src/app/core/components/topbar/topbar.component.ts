@@ -1,16 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-topbar',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.scss',
 })
-export class TopbarComponent {
-  @Input() page!: 'about' | 'blog';
-
-  backIcon = faArrowLeft;
-}
+export class TopbarComponent {}

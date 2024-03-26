@@ -4,6 +4,11 @@ import { HomeComponent } from './pages/home/home.component';
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: 'inicio',
+    pathMatch: 'full',
+  },
+  {
+    path: 'inicio',
     component: HomeComponent,
     title:
       'Allan Lobo | Serviços em Desenvolvimento de sistemas e Blog técnico',
@@ -22,7 +27,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'inicio',
     pathMatch: 'full',
   },
 ];
