@@ -12,7 +12,6 @@ interface Props {
 }
 
 const lang = Astro.props.lang || defaultLang;
-// Fallback to English if no translation is found
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const {
@@ -30,35 +29,28 @@ const fullTitle =
       (lang === "pt-br" ? "Desenvolvedor de Software" : "Software Developer")
     : `${title} | Allan Lobo`;
 
-// Alternate URLs for hreflang
 const ptUrl = new URL(getAlternateUrl(Astro.url.pathname, "pt-br"), Astro.site);
 const enUrl = new URL(getAlternateUrl(Astro.url.pathname, "en"), Astro.site);
 ---
 
-<!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 
-<!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-<!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Hreflang alternates -->
 <link rel="alternate" hreflang="pt-BR" href={ptUrl} />
 <link rel="alternate" hreflang="en" href={enUrl} />
 <link rel="alternate" hreflang="x-default" href={ptUrl} />
 
-<!-- Primary Meta Tags -->
 <title>{fullTitle}</title>
 <meta name="title" content={fullTitle} />
 <meta name="description" content={description} />
 <meta name="author" content="Allan Lobo" />
 <meta name="robots" content="index, follow" />
 
-<!-- Open Graph / Facebook -->
 <meta property="og:type" content={article ? "article" : "website"} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={fullTitle} />
@@ -79,18 +71,15 @@ const enUrl = new URL(getAlternateUrl(Astro.url.pathname, "en"), Astro.site);
 }
 {article && <meta property="article:author" content="Allan Lobo" />}
 
-<!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={fullTitle} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.site)} />
 
-<!-- Auto Language Redirect -->
 <script is:inline>
   (function () {
     try {
-      // Se o usuário já escolheu um idioma manualmente, não interfere
       if (localStorage.getItem("lang_preference_set") === "true") return;
 
       const path = window.location.pathname;
@@ -113,6 +102,5 @@ const enUrl = new URL(getAlternateUrl(Astro.url.pathname, "en"), Astro.site);
   })();
 </script>
 
-<!-- Fonts preload -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

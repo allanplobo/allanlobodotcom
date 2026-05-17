@@ -87,7 +87,6 @@ const jsonLd = JSON.stringify({
 
   <article class="blog-post" itemscope itemtype="https://schema.org/Article">
     <div class="blog-post__container container">
-      <!-- Breadcrumb -->
       <nav class="blog-post__breadcrumb" aria-label="Breadcrumb">
         <a href={localePath("/", lang)}>{t("post.breadcrumb.home")}</a>
         <span class="blog-post__breadcrumb-sep">/</span>
@@ -96,7 +95,6 @@ const jsonLd = JSON.stringify({
         <span class="blog-post__breadcrumb-current">{title}</span>
       </nav>
 
-      <!-- Header -->
       <header class="blog-post__header">
         <div class="blog-post__meta">
           <time
@@ -134,7 +132,6 @@ const jsonLd = JSON.stringify({
         }
       </header>
 
-      <!-- Content + TOC -->
       <div class="blog-post__layout">
         <div class="blog-post__content prose" itemprop="articleBody">
           <slot />
@@ -142,7 +139,6 @@ const jsonLd = JSON.stringify({
         <TableOfContents headings={headings} lang={lang} />
       </div>
 
-      <!-- Footer -->
       <footer class="blog-post__footer">
         <ShareButtons url={Astro.url.pathname} title={title} lang={lang} />
         <div class="blog-post__author">

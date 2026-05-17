@@ -1,0 +1,45 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Roda o deploy automaticamente ao fazer push na branch main
+  push:
+    branches: [main]
+  # Permite rodar o deploy manualmente na aba "Actions" do GitHub
+  workflow_dispatch:
+
+# BOAS PRÁTICAS DE SEGURANÇA:
+# Restringe as permissões do token do GitHub Actions apenas para leitura de código e escrita no Pages.
+# Isso evita que a action tenha permissão de alterar seu repositório.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Evita que deploys simultâneos se atropelem
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalar, Buildar e Fazer Upload (Astro)
+        uses: withastro/action@v3
+        with:
+          node-version: 22 # Respeitando a engine configurada no package.json
+          package-manager: npm
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

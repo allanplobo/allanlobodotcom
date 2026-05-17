@@ -12,7 +12,6 @@ const allPosts = (
   await getCollection("blog", ({ data }) => !data.draft && data.lang === lang)
 ).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-// Extract unique tags
 const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort();
 ---
 
@@ -53,7 +52,6 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort();
         )
       }
 
-      <!-- Posts Grid -->
       <div class="blog-listing__grid reveal-stagger" id="posts-grid">
         {
           allPosts.map((post) => (

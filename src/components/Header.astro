@@ -381,8 +381,6 @@ const alternateUrl =
   );
   langToggles.forEach((toggle) => {
     toggle.addEventListener("click", () => {
-      // A URL contains the target language. We can just set a flag that the user has manually chosen a language
-      // so the auto-redirect doesn't override them anymore.
       localStorage.setItem("lang_preference_set", "true");
     });
   });
