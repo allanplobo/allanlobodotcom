@@ -1,21 +1,15 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Roda o deploy automaticamente ao fazer push na branch main
   push:
-    branches: [main]
-  # Permite rodar o deploy manualmente na aba "Actions" do GitHub
+    branches: [ main ]
   workflow_dispatch:
 
-# BOAS PRÁTICAS DE SEGURANÇA:
-# Restringe as permissões do token do GitHub Actions apenas para leitura de código e escrita no Pages.
-# Isso evita que a action tenha permissão de alterar seu repositório.
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Evita que deploys simultâneos se atropelem
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -26,12 +20,23 @@ jobs:
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
-
-      - name: Instalar, Buildar e Fazer Upload (Astro)
-        uses: withastro/action@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 22 # Respeitando a engine configurada no package.json
-          package-manager: npm
+          node-version: 22
+          cache: 'npm'
+          
+      - name: Instalar dependências
+        run: npm install
+        
+      - name: Fazer o Build
+        run: npm run build
+        
+      - name: Upload do artefato (dist)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
 
   deploy:
     needs: build
