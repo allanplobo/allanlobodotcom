@@ -1,112 +1,188 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import PostCard from '../../../components/PostCard.astro';
-import { getCollection } from 'astro:content';
-import { getReadingTime } from '../../../utils/reading-time';
-import { useTranslations } from '../../../i18n/i18n';
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PostCard from "../../../components/PostCard.astro";
+import { getCollection } from "astro:content";
+import { getReadingTime } from "../../../utils/reading-time";
+import { useTranslations } from "../../../i18n/i18n";
 
-const lang = 'en';
+const lang = "en";
 const t = useTranslations(lang);
 
-const allPosts = (await getCollection('blog', ({ data }) => !data.draft && data.lang === lang))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const allPosts = (
+  await getCollection("blog", ({ data }) => !data.draft && data.lang === lang)
+).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 // Extract unique tags
-const allTags = [...new Set(allPosts.flatMap(post => post.data.tags))].sort();
+const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort();
 ---
 
 <BaseLayout
-  title={t('meta.home.title') === 'Home' ? t('blog.title') : t('meta.home.title')}
-  description={t('meta.blog.description')}
+  title={t("meta.home.title") === "Home"
+    ? t("blog.title")
+    : t("meta.home.title")}
+  description={t("meta.blog.description")}
   lang={lang}
 >
   <section class="blog-listing" id="blog-listing">
     <div class="blog-listing__container container">
       <header class="blog-listing__header reveal">
         <h1 class="blog-listing__title">
-          {t('blog.title')}<span class="blog-listing__dot">.</span>
+          {t("blog.title")}<span class="blog-listing__dot">.</span>
         </h1>
         <p class="blog-listing__subtitle">
-          {t('blog.subtitle')}
+          {t("blog.subtitle")}
         </p>
       </header>
 
       <!-- Tag Filter -->
-      {allTags.length > 0 && (
-        <div class="blog-listing__tags reveal" id="tag-filter">
-          <button class="blog-listing__tag-btn active" data-tag="all">{t('blog.all')}</button>
-          {allTags.map((tag) => (
-            <button class="blog-listing__tag-btn" data-tag={tag.toLowerCase()}>
-              {tag}
+      {
+        allTags.length > 0 && (
+          <div class="blog-listing__tags reveal" id="tag-filter">
+            <button class="blog-listing__tag-btn active" data-tag="all">
+              {t("blog.all")}
             </button>
-          ))}
-        </div>
-      )}
+            {allTags.map((tag) => (
+              <button
+                class="blog-listing__tag-btn"
+                data-tag={tag.toLowerCase()}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        )
+      }
 
       <!-- Posts Grid -->
       <div class="blog-listing__grid reveal-stagger" id="posts-grid">
-        {allPosts.map((post) => (
-          <div class="blog-listing__post-wrapper" data-tags={post.data.tags.map(t => t.toLowerCase()).join(',')}>
-            <PostCard
-              title={post.data.title}
-              description={post.data.description}
-              date={post.data.date}
-              tags={post.data.tags}
-              readingTime={`${getReadingTime(post.body || '')} ${t('reading.time')}`}
-              slug={post.id}
-              lang={lang}
-            />
-          </div>
-        ))}
+        {
+          allPosts.map((post) => (
+            <div
+              class="blog-listing__post-wrapper"
+              data-tags={post.data.tags.map((t) => t.toLowerCase()).join(",")}
+            >
+              <PostCard
+                title={post.data.title}
+                description={post.data.description}
+                date={post.data.date}
+                tags={post.data.tags}
+                readingTime={`${getReadingTime(post.body || "")} ${t("reading.time")}`}
+                slug={post.id}
+                lang={lang}
+              />
+            </div>
+          ))
+        }
       </div>
 
-      {allPosts.length === 0 && (
-        <div class="blog-listing__empty">
-          <p>{t('blog.empty')}</p>
-        </div>
-      )}
+      {
+        allPosts.length === 0 && (
+          <div class="blog-listing__empty">
+            <p>{t("blog.empty")}</p>
+          </div>
+        )
+      }
     </div>
   </section>
 </BaseLayout>
 
 <style>
-.blog-listing{padding-top:calc(var(--header-height) + var(--space-12));padding-bottom:var(--space-16)}
-.blog-listing__container{max-width:900px}
-.blog-listing__header{margin-bottom:var(--space-8)}
-.blog-listing__title{font-size:var(--text-4xl);font-weight:800;letter-spacing:-0.03em}
-.blog-listing__dot{color:var(--accent)}
-.blog-listing__subtitle{color:var(--text-secondary);font-size:var(--text-lg);margin-top:var(--space-2)}
-.blog-listing__tags{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-8);padding-bottom:var(--space-6);border-bottom:1px solid var(--border)}
-.blog-listing__tag-btn{background:var(--bg-secondary);color:var(--text-secondary);border:1px solid var(--border);padding:var(--space-2) var(--space-4);border-radius:var(--radius-xl);font-family:var(--font-sans);font-size:var(--text-sm);font-weight:500;cursor:pointer;transition:all var(--duration-normal) var(--ease-out)}
-.blog-listing__tag-btn:hover{border-color:var(--accent);color:var(--accent)}
-.blog-listing__tag-btn.active{background:var(--accent);color:var(--bg-primary);border-color:var(--accent)}
-.blog-listing__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:var(--space-6)}
-.blog-listing__post-wrapper{transition:opacity var(--duration-normal) var(--ease-out)}
-.blog-listing__post-wrapper.hidden{display:none}
-.blog-listing__empty{text-align:center;padding:var(--space-16);color:var(--text-muted);font-size:var(--text-lg)}
-@media(max-width:768px){.blog-listing__grid{grid-template-columns:1fr}}
+  .blog-listing {
+    padding-top: calc(var(--header-height) + var(--space-12));
+    padding-bottom: var(--space-16);
+  }
+  .blog-listing__container {
+    max-width: 900px;
+  }
+  .blog-listing__header {
+    margin-bottom: var(--space-8);
+  }
+  .blog-listing__title {
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  .blog-listing__dot {
+    color: var(--accent);
+  }
+  .blog-listing__subtitle {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+    margin-top: var(--space-2);
+  }
+  .blog-listing__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--border);
+  }
+  .blog-listing__tag-btn {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-xl);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--duration-normal) var(--ease-out);
+  }
+  .blog-listing__tag-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .blog-listing__tag-btn.active {
+    background: var(--accent);
+    color: var(--bg-primary);
+    border-color: var(--accent);
+  }
+  .blog-listing__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: var(--space-6);
+  }
+  .blog-listing__post-wrapper {
+    transition: opacity var(--duration-normal) var(--ease-out);
+  }
+  .blog-listing__post-wrapper.hidden {
+    display: none;
+  }
+  .blog-listing__empty {
+    text-align: center;
+    padding: var(--space-16);
+    color: var(--text-muted);
+    font-size: var(--text-lg);
+  }
+  @media (max-width: 768px) {
+    .blog-listing__grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 
 <script>
-// Tag filtering
-const tagBtns = document.querySelectorAll('.blog-listing__tag-btn');
-const postWrappers = document.querySelectorAll('.blog-listing__post-wrapper');
+  // Tag filtering
+  const tagBtns = document.querySelectorAll(".blog-listing__tag-btn");
+  const postWrappers = document.querySelectorAll(".blog-listing__post-wrapper");
 
-tagBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    tagBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  tagBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      tagBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
 
-    const tag = (btn as HTMLElement).dataset.tag;
+      const tag = (btn as HTMLElement).dataset.tag;
 
-    postWrappers.forEach(wrapper => {
-      const tags = (wrapper as HTMLElement).dataset.tags || '';
-      if (tag === 'all' || tags.includes(tag || '')) {
-        wrapper.classList.remove('hidden');
-      } else {
-        wrapper.classList.add('hidden');
-      }
+      postWrappers.forEach((wrapper) => {
+        const tags = (wrapper as HTMLElement).dataset.tags || "";
+        if (tag === "all" || tags.includes(tag || "")) {
+          wrapper.classList.remove("hidden");
+        } else {
+          wrapper.classList.add("hidden");
+        }
+      });
     });
   });
-});
 </script>

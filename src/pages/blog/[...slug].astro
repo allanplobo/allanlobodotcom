@@ -1,11 +1,14 @@
 ---
-import { getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
-import { getReadingTime } from '../../utils/reading-time';
-import { useTranslations } from '../../i18n/i18n';
+import { getCollection, render } from "astro:content";
+import BlogPost from "../../layouts/BlogPost.astro";
+import { getReadingTime } from "../../utils/reading-time";
+import { useTranslations } from "../../i18n/i18n";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft && data.lang === 'pt-br');
+  const posts = await getCollection(
+    "blog",
+    ({ data }) => !data.draft && data.lang === "pt-br",
+  );
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
@@ -14,7 +17,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
-const lang = 'pt-br';
+const lang = "pt-br";
 const t = useTranslations(lang);
 ---
 
@@ -24,10 +27,12 @@ const t = useTranslations(lang);
   date={post.data.date}
   updatedDate={post.data.updatedDate}
   tags={post.data.tags}
-  readingTime={`${getReadingTime(post.body || '')} ${t('reading.time')}`}
+  readingTime={`${getReadingTime(post.body || "")} ${t("reading.time")}`}
   headings={headings}
   lang={lang}
-  alternateUrl={post.data.alternateSlug ? `/en/blog/${post.data.alternateSlug}/` : undefined}
+  alternateUrl={post.data.alternateSlug
+    ? `/en/blog/${post.data.alternateSlug}/`
+    : undefined}
 >
   <Content />
 </BlogPost>
