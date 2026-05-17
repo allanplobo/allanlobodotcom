@@ -1,0 +1,73 @@
+---
+---
+
+<div class="contact-overlay" id="contact-overlay" aria-hidden="true">
+  <div class="contact-modal" id="contact-modal" role="dialog" aria-label="Opções de contato">
+    <button class="contact-modal__close" id="contact-close" aria-label="Fechar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h2 class="contact-modal__title">Vamos conversar?</h2>
+    <p class="contact-modal__subtitle">Escolha o melhor canal para entrar em contato</p>
+    <div class="contact-modal__options">
+      <a href="https://www.linkedin.com/in/allanplobo/" target="_blank" rel="noopener noreferrer" class="contact-modal__option">
+        <div class="contact-modal__icon contact-modal__icon--linkedin">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div class="contact-modal__info">
+          <span class="contact-modal__label">LinkedIn</span>
+          <span class="contact-modal__desc">Conecte-se comigo</span>
+        </div>
+        <svg class="contact-modal__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="mailto:allanplobo@gmail.com" class="contact-modal__option">
+        <div class="contact-modal__icon contact-modal__icon--email">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </div>
+        <div class="contact-modal__info">
+          <span class="contact-modal__label">Email</span>
+          <span class="contact-modal__desc">allanplobo@gmail.com</span>
+        </div>
+        <svg class="contact-modal__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+.contact-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity var(--duration-normal) var(--ease-out),visibility var(--duration-normal)}
+.contact-overlay.open{opacity:1;visibility:visible}
+.contact-modal{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-10);max-width:440px;width:90%;position:relative;transform:scale(0.95) translateY(10px);transition:transform var(--duration-normal) var(--ease-spring);box-shadow:var(--shadow-lg)}
+.contact-overlay.open .contact-modal{transform:scale(1) translateY(0)}
+.contact-modal__close{position:absolute;top:var(--space-4);right:var(--space-4);background:none;border:none;color:var(--text-muted);cursor:pointer;padding:var(--space-2);border-radius:var(--radius-sm);transition:all var(--duration-fast) var(--ease-out)}
+.contact-modal__close:hover{color:var(--text-primary);background:var(--bg-tertiary)}
+.contact-modal__title{font-size:var(--text-2xl);margin-bottom:var(--space-2)}
+.contact-modal__subtitle{color:var(--text-secondary);font-size:var(--text-sm);margin-bottom:var(--space-8)}
+.contact-modal__options{display:flex;flex-direction:column;gap:var(--space-4)}
+.contact-modal__option{display:flex;align-items:center;gap:var(--space-4);padding:var(--space-4) var(--space-5);background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-md);text-decoration:none;color:var(--text-primary);transition:all var(--duration-normal) var(--ease-out)}
+.contact-modal__option:hover{border-color:var(--accent);background:var(--bg-elevated);transform:translateX(4px);color:var(--text-primary)}
+.contact-modal__option:hover .contact-modal__arrow{transform:translateX(4px);color:var(--accent)}
+.contact-modal__icon{width:52px;height:52px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-modal__icon--linkedin{background:rgba(10,102,194,0.15);color:#0a66c2}
+.contact-modal__icon--email{background:var(--accent-glow);color:var(--accent)}
+.contact-modal__info{flex:1;display:flex;flex-direction:column;gap:2px}
+.contact-modal__label{font-weight:600;font-size:var(--text-base)}
+.contact-modal__desc{color:var(--text-secondary);font-size:var(--text-sm)}
+.contact-modal__arrow{color:var(--text-muted);transition:all var(--duration-normal) var(--ease-out);flex-shrink:0}
+</style>
+
+<script>
+function setupContactModal(){
+  const overlay=document.getElementById('contact-overlay');
+  const closeBtn=document.getElementById('contact-close');
+  const triggers=document.querySelectorAll('#contact-trigger, #contact-trigger-mobile');
+
+  function open(){overlay?.classList.add('open');document.body.style.overflow='hidden'}
+  function close(){overlay?.classList.remove('open');document.body.style.overflow=''}
+
+  triggers.forEach(t=>t.addEventListener('click',open));
+  closeBtn?.addEventListener('click',close);
+  overlay?.addEventListener('click',(e)=>{if(e.target===overlay)close()});
+  document.addEventListener('keydown',(e)=>{if(e.key==='Escape')close()});
+}
+setupContactModal();
+</script>

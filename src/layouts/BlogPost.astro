@@ -1,0 +1,147 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import ShareButtons from '../components/ShareButtons.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  updatedDate?: Date;
+  tags: string[];
+  readingTime?: string;
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { title, description, date, updatedDate, tags, readingTime, headings } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('pt-BR', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
+
+const formattedUpdated = updatedDate?.toLocaleDateString('pt-BR', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  author: {
+    '@type': 'Person',
+    name: 'Allan Lobo',
+    url: 'https://allanlobo.com',
+    jobTitle: 'Desenvolvedor de Software',
+    worksFor: { '@type': 'Organization', name: 'Luizalabs' },
+  },
+  datePublished: date.toISOString(),
+  dateModified: (updatedDate || date).toISOString(),
+  publisher: {
+    '@type': 'Person',
+    name: 'Allan Lobo',
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': Astro.url.href,
+  },
+});
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  article={true}
+  publishedDate={date.toISOString()}
+  modifiedDate={(updatedDate || date).toISOString()}
+>
+  <script type="application/ld+json" set:html={jsonLd} />
+
+  <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+    <div class="blog-post__container container">
+      <!-- Breadcrumb -->
+      <nav class="blog-post__breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="blog-post__breadcrumb-sep">/</span>
+        <a href="/blog">Blog</a>
+        <span class="blog-post__breadcrumb-sep">/</span>
+        <span class="blog-post__breadcrumb-current">{title}</span>
+      </nav>
+
+      <!-- Header -->
+      <header class="blog-post__header">
+        <div class="blog-post__meta">
+          <time class="blog-post__date" datetime={date.toISOString()} itemprop="datePublished">
+            {formattedDate}
+          </time>
+          {readingTime && (
+            <span class="blog-post__reading-time">· {readingTime}</span>
+          )}
+        </div>
+        <h1 class="blog-post__title" itemprop="headline">{title}</h1>
+        <p class="blog-post__description" itemprop="description">{description}</p>
+        <div class="blog-post__tags">
+          {tags.map((tag) => (
+            <a href={`/blog/tag/${tag.toLowerCase()}/`} class="blog-post__tag">{tag}</a>
+          ))}
+        </div>
+        {formattedUpdated && (
+          <p class="blog-post__updated">
+            Atualizado em <time datetime={(updatedDate as Date).toISOString()} itemprop="dateModified">{formattedUpdated}</time>
+          </p>
+        )}
+      </header>
+
+      <!-- Content + TOC -->
+      <div class="blog-post__layout">
+        <div class="blog-post__content prose" itemprop="articleBody">
+          <slot />
+        </div>
+        <TableOfContents headings={headings} />
+      </div>
+
+      <!-- Footer -->
+      <footer class="blog-post__footer">
+        <ShareButtons url={Astro.url.pathname} title={title} />
+        <div class="blog-post__author">
+          <div class="blog-post__author-info">
+            <span class="blog-post__author-name" itemprop="author">Allan Lobo</span>
+            <span class="blog-post__author-role">Desenvolvedor de Software @ Luizalabs</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+.blog-post{padding-top:calc(var(--header-height) + var(--space-8));padding-bottom:var(--space-16)}
+.blog-post__container{max-width:1100px}
+.blog-post__breadcrumb{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);color:var(--text-muted);margin-bottom:var(--space-8)}
+.blog-post__breadcrumb a{color:var(--text-muted);text-decoration:none;transition:color var(--duration-fast) var(--ease-out)}
+.blog-post__breadcrumb a:hover{color:var(--accent)}
+.blog-post__breadcrumb-sep{color:var(--border)}
+.blog-post__breadcrumb-current{color:var(--text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:300px}
+.blog-post__header{margin-bottom:var(--space-10);padding-bottom:var(--space-8);border-bottom:1px solid var(--border)}
+.blog-post__meta{display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-3)}
+.blog-post__date,.blog-post__reading-time{font-size:var(--text-sm);color:var(--text-muted)}
+.blog-post__title{font-size:var(--text-4xl);font-weight:800;line-height:1.15;letter-spacing:-0.03em;margin-bottom:var(--space-4)}
+.blog-post__description{font-size:var(--text-lg);color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4);max-width:var(--content-width)}
+.blog-post__tags{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-3)}
+.blog-post__tag{font-size:var(--text-xs);color:var(--accent);background:var(--accent-glow);padding:3px 12px;border-radius:var(--radius-xl);font-weight:500;text-decoration:none;transition:all var(--duration-fast) var(--ease-out)}
+.blog-post__tag:hover{background:var(--accent-glow-strong)}
+.blog-post__updated{font-size:var(--text-xs);color:var(--text-muted);font-style:italic}
+.blog-post__layout{display:flex;gap:var(--space-12);align-items:flex-start}
+.blog-post__content{flex:1;min-width:0}
+.blog-post__footer{margin-top:var(--space-12);padding-top:var(--space-8);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-6)}
+.blog-post__author{display:flex;align-items:center;gap:var(--space-3)}
+.blog-post__author-info{display:flex;flex-direction:column}
+.blog-post__author-name{font-weight:600;font-size:var(--text-sm);color:var(--text-primary)}
+.blog-post__author-role{font-size:var(--text-xs);color:var(--text-muted)}
+@media(max-width:1024px){.blog-post__layout{flex-direction:column}}
+@media(max-width:768px){.blog-post__title{font-size:var(--text-3xl)}}
+</style>
