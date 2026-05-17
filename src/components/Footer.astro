@@ -1,4 +1,12 @@
 ---
+import { type Lang, defaultLang, useTranslations } from '../i18n/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang || defaultLang;
+const t = useTranslations(lang);
 ---
 
 <footer class="footer">
@@ -6,7 +14,7 @@
     <div class="footer__left">
       <span class="footer__copy">&copy; {new Date().getFullYear()} Allan Lobo</span>
       <span class="footer__sep">·</span>
-      <span class="footer__tagline">Feito com <span class="footer__heart">♥</span> e Astro</span>
+      <span class="footer__tagline">{t('footer.madeWith')} <span class="footer__heart">♥</span> {t('footer.and')}</span>
     </div>
     <div class="footer__socials">
       <a href="https://www.linkedin.com/in/allanplobo/" target="_blank" rel="noopener noreferrer" class="footer__social" aria-label="LinkedIn">

@@ -1,4 +1,6 @@
 ---
+import { type Lang, defaultLang, useTranslations, localePath, getDateLocale } from '../i18n/i18n';
+
 interface Props {
   title: string;
   description: string;
@@ -6,11 +8,13 @@ interface Props {
   tags: string[];
   readingTime?: string;
   slug: string;
+  lang?: Lang;
 }
 
-const { title, description, date, tags, readingTime, slug } = Astro.props;
+const { title, description, date, tags, readingTime, slug, lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
 
-const formattedDate = date.toLocaleDateString('pt-BR', {
+const formattedDate = date.toLocaleDateString(getDateLocale(lang), {
   day: '2-digit',
   month: 'short',
   year: 'numeric',
@@ -18,7 +22,7 @@ const formattedDate = date.toLocaleDateString('pt-BR', {
 ---
 
 <article class="post-card">
-  <a href={`/blog/${slug}/`} class="post-card__link">
+  <a href={`${localePath('/blog', lang)}/${slug}/`} class="post-card__link">
     <div class="post-card__header">
       <time class="post-card__date" datetime={date.toISOString()}>{formattedDate}</time>
       {readingTime && <span class="post-card__reading">{readingTime}</span>}
@@ -31,7 +35,7 @@ const formattedDate = date.toLocaleDateString('pt-BR', {
       ))}
     </div>
     <span class="post-card__cta">
-      Ler artigo
+      {t('blog.readArticle')}
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </span>
   </a>

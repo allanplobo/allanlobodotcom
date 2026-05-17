@@ -1,4 +1,6 @@
 ---
+import { type Lang, defaultLang, getAlternateUrl, useTranslations } from '../i18n/i18n';
+
 interface Props {
   title: string;
   description: string;
@@ -6,8 +8,11 @@ interface Props {
   article?: boolean;
   publishedDate?: string;
   modifiedDate?: string;
+  lang?: Lang;
 }
 
+const lang = Astro.props.lang || defaultLang;
+const t = useTranslations(lang);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const {
@@ -19,7 +24,11 @@ const {
   modifiedDate,
 } = Astro.props;
 
-const fullTitle = title === 'Home' ? 'Allan Lobo — Desenvolvedor de Software' : `${title} | Allan Lobo`;
+const fullTitle = title === 'Home' ? 'Allan Lobo — ' + (lang === 'pt-br' ? 'Desenvolvedor de Software' : 'Software Developer') : `${title} | Allan Lobo`;
+
+// Alternate URLs for hreflang
+const ptUrl = new URL(getAlternateUrl(Astro.url.pathname, 'pt-br'), Astro.site);
+const enUrl = new URL(getAlternateUrl(Astro.url.pathname, 'en'), Astro.site);
 ---
 
 <!-- Global Metadata -->
@@ -32,6 +41,11 @@ const fullTitle = title === 'Home' ? 'Allan Lobo — Desenvolvedor de Software' 
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
+
+<!-- Hreflang alternates -->
+<link rel="alternate" hreflang="pt-BR" href={ptUrl} />
+<link rel="alternate" hreflang="en" href={enUrl} />
+<link rel="alternate" hreflang="x-default" href={ptUrl} />
 
 <!-- Primary Meta Tags -->
 <title>{fullTitle}</title>
@@ -46,7 +60,7 @@ const fullTitle = title === 'Home' ? 'Allan Lobo — Desenvolvedor de Software' 
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.site)} />
-<meta property="og:locale" content="pt_BR" />
+<meta property="og:locale" content={lang === 'pt-br' ? 'pt_BR' : 'en_US'} />
 <meta property="og:site_name" content="Allan Lobo" />
 
 {article && publishedDate && (
@@ -69,5 +83,3 @@ const fullTitle = title === 'Home' ? 'Allan Lobo — Desenvolvedor de Software' 
 <!-- Fonts preload -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-

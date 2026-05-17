@@ -1,0 +1,78 @@
+---
+title: "Why every dev should have a blog in 2026"
+description: "Sharing knowledge isn't just about teaching — it's about solidifying what you know, building connections, and growing your personal brand as a developer."
+date: 2026-05-17
+tags: ["career", "dev", "blog"]
+draft: false
+lang: en
+---
+
+If you're a developer and don't have a blog yet, this post is for you. I'll share why I decided to create this space and why I believe every dev should consider doing the same.
+
+## The "impostor syndrome" problem
+
+One of the biggest fears devs have when considering writing is: *"who am I to talk about this?"*. The truth is that **you don't need to be an expert** to share something useful.
+
+If you learned something yesterday that you didn't know before, someone in the world is in the same position you were. Your article might be exactly what that person needs.
+
+> "The best time to share knowledge is when the learning is still fresh." — Some wise dev on the internet
+
+## Concrete benefits of having a blog
+
+Here are the benefits I see as most relevant:
+
+### 1. It solidifies your knowledge
+
+When you write about something, you need to **organize your thoughts**. That concept you "kind of" understand becomes clear when you need to explain it to someone else.
+
+```typescript
+// Before writing about this, I "knew" it but couldn't explain it
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+
+// After writing, I understand every detail and can teach it
+```
+
+### 2. It builds your digital presence
+
+Recruiters look for candidates who demonstrate knowledge **publicly**. A blog with technical articles is worth more than many certifications on your resume.
+
+### 3. Organic networking
+
+When you consistently publish content, people in the same niche start following you. This creates **genuine connections** — not that forced networking at events.
+
+### 4. Reference for the future
+
+How many times have you solved a problem and, months later, forgot how? With a blog, you have **your own personal documentation** always accessible.
+
+## How to get started?
+
+It doesn't need to be complex. My recommendation:
+
+1. **Choose a technology you enjoy** to build the blog (I chose Astro.js)
+2. **Write about what you're learning right now** — it doesn't need to be advanced
+3. **Publish without fear** — you can always edit later
+4. **Stay consistent** — one post per month is already great
+
+## The stack behind this blog
+
+For the curious, this blog was built with:
+
+- **Astro.js 5** — Content-first framework with zero JS by default
+- **MDX** — Markdown with superpowers (I can use components inside posts)
+- **Content Collections** — Typed schema for posts with Zod validation
+- **Vanilla CSS** — Design system with custom properties
+- **Hosting** — Static deploy on Hostinger
+
+The performance is insane: ~99 on Lighthouse without extra effort, because Astro doesn't ship unnecessary JavaScript to the browser.
+
+## Conclusion
+
+Don't wait to have "enough knowledge" or the "perfect platform". **Start now.** The best blog is the one that exists.
+
+If this post inspired you, send me a message on [LinkedIn](https://www.linkedin.com/in/allanplobo/) — I'd love to know it helped someone take the first step.
+
+---
+
+*This is the first of many posts here. Stay tuned!* 🚀

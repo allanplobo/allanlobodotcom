@@ -1,21 +1,29 @@
 ---
+import { type Lang, defaultLang, useTranslations } from '../i18n/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang || defaultLang;
+const t = useTranslations(lang);
 ---
 
 <div class="contact-overlay" id="contact-overlay" aria-hidden="true">
-  <div class="contact-modal" id="contact-modal" role="dialog" aria-label="Opções de contato">
-    <button class="contact-modal__close" id="contact-close" aria-label="Fechar">
+  <div class="contact-modal" id="contact-modal" role="dialog" aria-label={t('contact.title')}>
+    <button class="contact-modal__close" id="contact-close" aria-label={t('contact.close')}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <h2 class="contact-modal__title">Vamos conversar?</h2>
-    <p class="contact-modal__subtitle">Escolha o melhor canal para entrar em contato</p>
+    <h2 class="contact-modal__title">{t('contact.title')}</h2>
+    <p class="contact-modal__subtitle">{t('contact.subtitle')}</p>
     <div class="contact-modal__options">
       <a href="https://www.linkedin.com/in/allanplobo/" target="_blank" rel="noopener noreferrer" class="contact-modal__option">
         <div class="contact-modal__icon contact-modal__icon--linkedin">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
         </div>
         <div class="contact-modal__info">
-          <span class="contact-modal__label">LinkedIn</span>
-          <span class="contact-modal__desc">Conecte-se comigo</span>
+          <span class="contact-modal__label">{t('contact.linkedin')}</span>
+          <span class="contact-modal__desc">{t('contact.linkedin.desc')}</span>
         </div>
         <svg class="contact-modal__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -24,7 +32,7 @@
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         </div>
         <div class="contact-modal__info">
-          <span class="contact-modal__label">Email</span>
+          <span class="contact-modal__label">{t('contact.email')}</span>
           <span class="contact-modal__desc">allanplobo@gmail.com</span>
         </div>
         <svg class="contact-modal__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
