@@ -1,22 +1,27 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import { useTranslations } from "../i18n/i18n";
+
+const lang = "pt-br";
+const t = useTranslations(lang);
 
 const jsonLd = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Allan Lobo',
-  url: 'https://allanlobo.com',
-  jobTitle: 'Desenvolvedor de Software',
-  worksFor: { '@type': 'Organization', name: 'Luizalabs' },
-  sameAs: ['https://www.linkedin.com/in/allanplobo/'],
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Allan Lobo",
+  url: "https://allanlobo.com",
+  jobTitle: "Desenvolvedor de Software",
+  worksFor: { "@type": "Organization", name: "Luizalabs" },
+  sameAs: ["https://www.linkedin.com/in/allanplobo/"],
 });
 ---
 
 <BaseLayout
-  title="Home"
-  description="Allan Lobo — Desenvolvedor de Software na Luizalabs. Blog sobre tecnologia, carreira e desenvolvimento."
+  title={t("meta.home.title")}
+  description={t("meta.home.description")}
+  lang={lang}
 >
   <script type="application/ld+json" set:html={jsonLd} />
-  <Hero />
+  <Hero lang={lang} />
 </BaseLayout>

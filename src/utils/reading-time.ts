@@ -5,5 +5,5 @@
 export function getReadingTime(body: string): string {
   const words = body.trim().split(/\s+/).filter(Boolean).length;
   const minutes = Math.max(1, Math.ceil(words / 200));
-  return `${minutes} min de leitura`;
+  return `${minutes}`;
 }

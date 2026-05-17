@@ -164,7 +164,7 @@ export const ui = {
     'post.author.role': 'Software Developer @ Luizalabs',
 
     // TOC
-    'toc.title': 'Contents',
+    'toc.title': 'Table of Contents',
 
     // Footer
     'footer.madeWith': 'Made with',

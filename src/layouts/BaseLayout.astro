@@ -14,6 +14,7 @@ interface Props {
   publishedDate?: string;
   modifiedDate?: string;
   lang?: Lang;
+  alternateUrl?: string;
 }
 
 const lang = Astro.props.lang || getLangFromUrl(Astro.url);
@@ -27,7 +28,7 @@ const props = Astro.props;
     <BaseHead {...props} lang={lang} />
   </head>
   <body>
-    <Header lang={lang} />
+    <Header lang={lang} alternateUrl={props.alternateUrl} />
     <main id="main-content">
       <slot />
     </main>
@@ -47,5 +48,22 @@ const props = Astro.props;
 
       revealElements.forEach(el => revealObserver.observe(el));
     </script>
+
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      #main-content {
+        flex: 1;
+      }
+      
+      @media (max-width: 768px) {
+        body {
+          display: block;
+        }
+      }
+    </style>
   </body>
 </html>

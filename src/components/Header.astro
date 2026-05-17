@@ -3,13 +3,14 @@ import { type Lang, defaultLang, useTranslations, localePath, getAlternateUrl, l
 
 interface Props {
   lang?: Lang;
+  alternateUrl?: string;
 }
 
 const lang = Astro.props.lang || defaultLang;
 const t = useTranslations(lang);
 const currentPath = Astro.url.pathname;
 const alternateLang = lang === 'pt-br' ? 'en' : 'pt-br';
-const alternateUrl = getAlternateUrl(currentPath, alternateLang as Lang);
+const alternateUrl = Astro.props.alternateUrl || getAlternateUrl(currentPath, alternateLang as Lang);
 ---
 
 <header class="header" id="site-header">
@@ -93,5 +94,15 @@ mobileBtn?.addEventListener('click',()=>{
   mobileBtn.setAttribute('aria-expanded',String(!expanded));
   mobileMenu?.classList.toggle('open');
   mobileMenu?.setAttribute('aria-hidden',String(expanded));
+});
+
+// Save language preference on toggle click
+const langToggles = document.querySelectorAll('.header__lang-toggle, .header__mobile-lang');
+langToggles.forEach(toggle => {
+  toggle.addEventListener('click', (e) => {
+    // A URL contains the target language. We can just set a flag that the user has manually chosen a language
+    // so the auto-redirect doesn't override them anymore.
+    localStorage.setItem('lang_preference_set', 'true');
+  });
 });
 </script>

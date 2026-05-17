@@ -1,11 +1,11 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
-import { getReadingTime } from '../../utils/reading-time';
-import { useTranslations } from '../../i18n/i18n';
+import BlogPost from '../../../layouts/BlogPost.astro';
+import { getReadingTime } from '../../../utils/reading-time';
+import { useTranslations } from '../../../i18n/i18n';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft && data.lang === 'pt-br');
+  const posts = await getCollection('blog', ({ data }) => !data.draft && data.lang === 'en');
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
-const lang = 'pt-br';
+const lang = 'en';
 const t = useTranslations(lang);
 ---
 

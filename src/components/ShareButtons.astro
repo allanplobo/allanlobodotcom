@@ -1,24 +1,29 @@
 ---
+import { type Lang, defaultLang, useTranslations } from '../i18n/i18n';
+
 interface Props {
   url: string;
   title: string;
+  lang?: Lang;
 }
-const { url, title } = Astro.props;
+const { url, title, lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+
 const fullUrl = new URL(url, Astro.site).toString();
 const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(fullUrl)}`;
 ---
 
 <div class="share-buttons">
-  <span class="share-buttons__label">Compartilhar</span>
+  <span class="share-buttons__label">{t('post.share')}</span>
   <div class="share-buttons__list">
-    <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" class="share-buttons__btn" aria-label="Compartilhar no LinkedIn" title="LinkedIn">
+    <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" class="share-buttons__btn" aria-label="LinkedIn" title="LinkedIn">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
     </a>
-    <button class="share-buttons__btn" id="copy-link-btn" aria-label="Copiar link" title="Copiar link" data-url={fullUrl}>
+    <button class="share-buttons__btn" id="copy-link-btn" aria-label={t('post.copyLink')} title={t('post.copyLink')} data-url={fullUrl}>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
     </button>
   </div>
-  <span class="share-buttons__copied" id="copied-feedback">Link copiado!</span>
+  <span class="share-buttons__copied" id="copied-feedback">{t('post.linkCopied')}</span>
 </div>
 
 <style>

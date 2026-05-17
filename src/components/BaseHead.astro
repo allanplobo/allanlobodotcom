@@ -80,6 +80,33 @@ const enUrl = new URL(getAlternateUrl(Astro.url.pathname, 'en'), Astro.site);
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.site)} />
 
+<!-- Auto Language Redirect -->
+<script is:inline>
+  (function() {
+    try {
+      // Se o usuário já escolheu um idioma manualmente, não interfere
+      if (localStorage.getItem('lang_preference_set') === 'true') return;
+
+      const path = window.location.pathname;
+      const isEnPage = path.startsWith('/en/') || path === '/en';
+      const browserLang = navigator.language || navigator.userLanguage;
+      const isBrowserEn = browserLang.toLowerCase().startsWith('en');
+
+      // Se o browser é inglês e está numa página PT, redireciona para EN
+      if (isBrowserEn && !isEnPage) {
+        window.location.replace('/en' + (path === '/' ? '' : path));
+      } 
+      // Se o browser NÃO é inglês (ex: pt-BR) e está numa página EN, redireciona para PT
+      else if (!isBrowserEn && isEnPage) {
+        const newPath = path.replace(/^\/en/, '');
+        window.location.replace(newPath === '' ? '/' : newPath);
+      }
+    } catch (e) {
+      // Ignora erros de localStorage ou navegação
+    }
+  })();
+</script>
+
 <!-- Fonts preload -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
