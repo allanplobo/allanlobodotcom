@@ -28,7 +28,7 @@ const alternateUrl = Astro.props.alternateUrl || getAlternateUrl(currentPath, al
       </button>
       <a href={alternateUrl} class="header__lang-toggle" aria-label={`Switch to ${languages[alternateLang]}`} title={languages[alternateLang]}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        <span class="header__lang-label">{alternateLang === 'en' ? 'EN' : 'PT'}</span>
+        <span class="header__lang-label">{alternateLang === 'en' ? 'EN' : 'PT-BR'}</span>
       </a>
     </div>
     <button class="header__mobile-btn" id="mobile-menu-btn" aria-label="Menu" aria-expanded="false">
@@ -52,7 +52,7 @@ const alternateUrl = Astro.props.alternateUrl || getAlternateUrl(currentPath, al
 .header__logo{display:flex;align-items:center;font-size:var(--text-xl);font-weight:700;color:var(--text-primary);text-decoration:none;letter-spacing:-0.02em;transition:transform var(--duration-fast) var(--ease-spring)}
 .header__logo:hover{transform:scale(1.03);color:var(--text-primary)}
 .header__logo-accent{color:var(--accent)}
-.header__logo-dot{color:var(--accent);font-size:var(--text-2xl);line-height:1;animation:glowPulse 3s ease-in-out infinite;display:inline-block}
+.header__logo-dot{color:var(--accent);font-size:var(--text-2xl);line-height:1;animation:textGlowPulse 3s ease-in-out infinite;display:inline-block}
 .header__links{display:flex;align-items:center;gap:var(--space-8)}
 .header__link{position:relative;color:var(--text-secondary);font-size:var(--text-sm);font-weight:500;text-decoration:none;padding:var(--space-2) 0;letter-spacing:0.02em;text-transform:uppercase;transition:color var(--duration-fast) var(--ease-out)}
 .header__link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);border-radius:1px;transition:width var(--duration-normal) var(--ease-out)}

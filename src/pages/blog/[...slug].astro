@@ -27,6 +27,7 @@ const t = useTranslations(lang);
   readingTime={`${getReadingTime(post.body || '')} ${t('reading.time')}`}
   headings={headings}
   lang={lang}
+  alternateUrl={post.data.alternateSlug ? `/en/blog/${post.data.alternateSlug}/` : undefined}
 >
   <Content />
 </BlogPost>

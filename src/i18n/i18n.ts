@@ -198,7 +198,8 @@ export type UiKey = keyof (typeof ui)[typeof defaultLang];
  */
 export function useTranslations(lang: Lang) {
   return function t(key: UiKey): string {
-    return ui[lang][key] || ui[defaultLang][key];
+    const safeLang = ui[lang] ? lang : defaultLang;
+    return ui[safeLang][key] || ui[defaultLang][key] || key;
   };
 }
 

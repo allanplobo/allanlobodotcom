@@ -13,9 +13,10 @@ interface Props {
   readingTime?: string;
   headings: { depth: number; slug: string; text: string }[];
   lang?: Lang;
+  alternateUrl?: string;
 }
 
-const { title, description, date, updatedDate, tags, readingTime, headings, lang = defaultLang } = Astro.props;
+const { title, description, date, updatedDate, tags, readingTime, headings, lang = defaultLang, alternateUrl } = Astro.props;
 const t = useTranslations(lang);
 const dateLocale = getDateLocale(lang);
 
@@ -64,7 +65,7 @@ const jsonLd = JSON.stringify({
   publishedDate={date.toISOString()}
   modifiedDate={(updatedDate || date).toISOString()}
   lang={lang}
-  alternateUrl={lang === 'pt-br' ? '/en/blog' : '/blog'}
+  alternateUrl={alternateUrl || (lang === 'pt-br' ? '/en/blog' : '/blog')}
 >
   <script type="application/ld+json" set:html={jsonLd} />
 

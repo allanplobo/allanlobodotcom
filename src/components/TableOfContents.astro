@@ -66,11 +66,19 @@ function setupTOC() {
       }
     });
   }, {
-    rootMargin: '-80px 0px -60% 0px',
+    rootMargin: '-80px 0px -40% 0px',
     threshold: 0,
   });
 
   headings.forEach(h => observer.observe(h));
+
+  // Fallback para o final da página
+  window.addEventListener('scroll', () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+      links.forEach(l => l.classList.remove('active'));
+      links[links.length - 1]?.classList.add('active');
+    }
+  });
 }
 
 setupTOC();
